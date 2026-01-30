@@ -377,6 +377,7 @@
                         <ul>
                             <li><strong>Missed Messages:</strong> $10 for every 2 hours of delay</li>
                             <li><strong>Late to Meetings:</strong> $2 per minute joined late</li>
+                            <li><strong>Extended Meeting:</strong> $2 per minute of meeting extension</li>
                             <li><strong>Failed Notebook Actions:</strong> 1 unit of SPDR Gold Trust per action</li>
                         </ul>
                     </div>
@@ -408,7 +409,13 @@
                             <button onclick="quickAddCharge('Late to Meeting')" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold;">+ Add</button>
                         </div>
                         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
-                            <h3 style="color: #667eea; font-size: 18px; margin-bottom: 10px;">Failed Action</h3>
+                            <h3 style="color: #667eea; font-size: 18px; margin-bottom: 10px;">Extended Meeting</h3>
+                            <p style="color: #666; font-size: 14px; margin-bottom: 15px;">$2 per minute</p>
+                            <input type="number" min="0" id="quickExtended" placeholder="Minutes extended" style="margin-bottom: 10px; text-align: center;">
+                            <button onclick="quickAddCharge('Extended Meeting')" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold;">+ Add</button>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                            <h3 style="color: #667eea; font-size: 18px; margin-bottom: 10px;">Action trying to escape Notebook</h3>
                             <p style="color: #666; font-size: 14px; margin-bottom: 15px;">1 SPDR Gold</p>
                             <div style="height: 42px; margin-bottom: 10px;"></div>
                             <button onclick="quickAddCharge('Failed Notebook Action')" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold;">+ Add</button>
@@ -618,6 +625,10 @@
                 minutesLate = parseInt(document.getElementById('quickMinutes').value) || 5;
                 amount = minutesLate * 2;
                 defaultDesc = `Joined meeting ${minutesLate} minutes late`;
+            } else if (category === 'Extended Meeting') {
+                const minutesExtended = parseInt(document.getElementById('quickExtended').value) || 5;
+                amount = minutesExtended * 2;
+                defaultDesc = `Meeting extended by ${minutesExtended} minutes`;
             } else if (category === 'Failed Notebook Action') {
                 amount = 1;
                 units = 'SPDR Gold';
