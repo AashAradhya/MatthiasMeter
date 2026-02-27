@@ -138,6 +138,84 @@
             margin-top: 20px;
         }
 
+        /* ---- Top-level totals ---- */
+        .summary-totals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .summary-total-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 28px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .summary-total-item h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.85;
+            margin-bottom: 6px;
+        }
+
+        .summary-total-item .amount {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 4px 0;
+        }
+
+        .summary-total-item .count {
+            font-size: 14px;
+            opacity: 0.75;
+        }
+
+        /* ---- Breakdown section ---- */
+        .breakdown-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin: 24px 0 12px 2px;
+            font-weight: 600;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .breakdown-item {
+            background: #f0f1ff;
+            color: #333;
+            padding: 16px 18px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .breakdown-item h3 {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 6px;
+        }
+
+        .breakdown-item .amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin: 2px 0;
+        }
+
+        .breakdown-item .count {
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* keep legacy class for team view */
         .summary-item {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -272,6 +350,125 @@
             padding: 40px;
             font-size: 18px;
         }
+
+        /* ---- Matthias view ---- */
+        .matthias-hero {
+            background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
+            color: white;
+            padding: 36px 28px;
+            border-radius: 14px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 30px rgba(221, 36, 118, 0.35);
+        }
+
+        .matthias-hero h2 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .matthias-hero .hero-amount {
+            font-size: 52px;
+            font-weight: 800;
+            margin: 8px 0;
+        }
+
+        .matthias-hero .hero-sub {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .matthias-currency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .matthias-currency-card {
+            background: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .matthias-currency-card h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.85;
+            margin-bottom: 6px;
+        }
+
+        .matthias-currency-card .amount {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .matthias-currency-card .count {
+            font-size: 13px;
+            opacity: 0.75;
+            margin-top: 4px;
+        }
+
+        .matthias-reason-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .matthias-reason-card {
+            background: #fff5f5;
+            border-left: 4px solid #ff5858;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .matthias-reason-card h4 {
+            color: #dd2476;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .matthias-reason-card .amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .matthias-reason-card .count {
+            font-size: 13px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .matthias-people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .matthias-person-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .matthias-person-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .matthias-person-card .detail {
+            font-size: 14px;
+            color: #555;
+            margin: 3px 0;
+        }
     </style>
 </head>
 <body>
@@ -342,10 +539,12 @@
         <div class="container">
             <div class="header">
                 <h1>MatthiasMeter</h1>
-                <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                     <button onclick="showPersonalView()" class="btn-small" id="personalBtn">My Charges</button>
                     <button onclick="showTeamView()" class="btn-small" id="teamBtn">Team Dashboard</button>
                     <span>Welcome, <strong id="currentUser"></strong></span>
+                    <span id="connectionStatus" style="font-size: 12px;">🟢 Connected</span>
+                    <button onclick="refreshData()" class="btn-small" style="background:#43a047;">↻ Refresh</button>
                     <button onclick="logout()" class="btn-small">Logout</button>
                 </div>
             </div>
@@ -431,6 +630,33 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Matthias View (read-only) -->
+            <div id="matthiasView" class="hidden">
+                <div class="matthias-hero">
+                    <h2>Your Total Debt</h2>
+                    <div class="hero-amount" id="matthiasTotal">$0.00</div>
+                    <div class="hero-sub" id="matthiasGoldTotal"></div>
+                </div>
+
+                <div class="matthias-currency-grid" id="matthiasCurrencyGrid">
+                    <!-- USD / Gold cards -->
+                </div>
+
+                <div class="card">
+                    <h2>Breakdown by Reason</h2>
+                    <div class="matthias-reason-grid" id="matthiasReasonGrid">
+                        <!-- Reason cards -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>What You Owe Each Person</h2>
+                    <div class="matthias-people-grid" id="matthiasPeopleGrid">
+                        <!-- Per-person cards -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -459,6 +685,16 @@
         let currentUser = null;
         let charges = [];
         let allUsersData = {};
+        let dataLoaded = false;
+
+        // Firebase can return arrays as objects with numeric keys.
+        // This helper always returns a proper JS array.
+        function toArray(data) {
+            if (!data) return [];
+            if (Array.isArray(data)) return data.filter(Boolean);
+            if (typeof data === 'object') return Object.values(data).filter(Boolean);
+            return [];
+        }
 
         function initializeApp() {
             // Check if config is set
@@ -480,9 +716,31 @@
 
                 db.ref('charges').on('value', (snapshot) => {
                     allUsersData = snapshot.val() || {};
+                    dataLoaded = true;
                     if (currentUser) {
-                        charges = allUsersData[currentUser] || [];
-                        updateDashboard();
+                        if (isMatthias()) {
+                            updateMatthiasView();
+                        } else {
+                            charges = toArray(allUsersData[currentUser]);
+                            updateDashboard();
+                            if (!document.getElementById('teamView').classList.contains('hidden')) {
+                                updateTeamDashboard();
+                            }
+                        }
+                    }
+                });
+
+                // Monitor connection state
+                db.ref('.info/connected').on('value', (snap) => {
+                    const statusEl = document.getElementById('connectionStatus');
+                    if (statusEl) {
+                        if (snap.val() === true) {
+                            statusEl.textContent = '🟢 Connected';
+                            statusEl.style.color = '#4caf50';
+                        } else {
+                            statusEl.textContent = '🔴 Offline';
+                            statusEl.style.color = '#f44336';
+                        }
                     }
                 });
 
@@ -602,12 +860,76 @@
             document.getElementById('dashboardView').classList.add('hidden');
         }
 
+        async function refreshData() {
+            try {
+                const snapshot = await db.ref('charges').once('value');
+                allUsersData = snapshot.val() || {};
+                dataLoaded = true;
+                if (currentUser) {
+                    if (isMatthias()) {
+                        updateMatthiasView();
+                    } else {
+                        charges = toArray(allUsersData[currentUser]);
+                        updateDashboard();
+                        if (!document.getElementById('teamView').classList.contains('hidden')) {
+                            updateTeamDashboard();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Refresh failed:', error);
+                alert('Failed to refresh data. Check your connection and try again.');
+            }
+        }
+
+        function isMatthias() {
+            return currentUser && currentUser.toLowerCase().trim() === 'matthias';
+        }
+
         function showDashboard() {
             document.getElementById('authView').classList.add('hidden');
             document.getElementById('dashboardView').classList.remove('hidden');
             document.getElementById('currentUser').textContent = currentUser;
-            showPersonalView();
-            updateDashboard();
+
+            if (isMatthias()) {
+                // Hide collector-only controls
+                document.getElementById('personalBtn').classList.add('hidden');
+                document.getElementById('teamBtn').classList.add('hidden');
+                document.getElementById('personalView').classList.add('hidden');
+                document.getElementById('teamView').classList.add('hidden');
+                document.getElementById('matthiasView').classList.remove('hidden');
+
+                if (dataLoaded) {
+                    updateMatthiasView();
+                } else {
+                    db.ref('charges').once('value').then((snapshot) => {
+                        allUsersData = snapshot.val() || {};
+                        dataLoaded = true;
+                        updateMatthiasView();
+                    });
+                }
+            } else {
+                // Normal collector view
+                document.getElementById('personalBtn').classList.remove('hidden');
+                document.getElementById('teamBtn').classList.remove('hidden');
+                document.getElementById('matthiasView').classList.add('hidden');
+
+                if (dataLoaded) {
+                    charges = toArray(allUsersData[currentUser]);
+                    showPersonalView();
+                    updateDashboard();
+                } else {
+                    document.getElementById('summaryGrid').innerHTML = '<p style="color:#888; padding:20px; text-align:center;">Loading your charges from Firebase…</p>';
+                    document.getElementById('chargesList').innerHTML = '<p style="color:#888; padding:20px; text-align:center;">Loading…</p>';
+                    showPersonalView();
+                    db.ref('charges').once('value').then((snapshot) => {
+                        allUsersData = snapshot.val() || {};
+                        dataLoaded = true;
+                        charges = toArray(allUsersData[currentUser]);
+                        updateDashboard();
+                    });
+                }
+            }
         }
 
         async function quickAddCharge(category) {
@@ -660,6 +982,8 @@
                     document.getElementById('quickDelay').value = '';
                 } else if (category === 'Late to Meeting') {
                     document.getElementById('quickMinutes').value = '';
+                } else if (category === 'Extended Meeting') {
+                    document.getElementById('quickExtended').value = '';
                 }
 
                 // Show success message
@@ -708,29 +1032,36 @@
                 }
             });
 
-            // Render summary
+            // Render summary — totals first, then breakdown
             let summaryHTML = `
-                <div class="summary-item">
-                    <h3>Total in USD</h3>
-                    <div class="amount">$${totalUSD.toFixed(2)}</div>
-                    <div class="count">${charges.filter(c => c.units === 'USD').length} charges</div>
-                </div>
-                <div class="summary-item">
-                    <h3>SPDR Gold Trust</h3>
-                    <div class="amount">${totalGold.toFixed(2)}</div>
-                    <div class="count">${charges.filter(c => c.units === 'SPDR Gold').length} actions</div>
+                <div class="summary-totals">
+                    <div class="summary-total-item">
+                        <h3>Total in USD</h3>
+                        <div class="amount">$${totalUSD.toFixed(2)}</div>
+                        <div class="count">${charges.filter(c => c.units === 'USD').length} charges</div>
+                    </div>
+                    <div class="summary-total-item">
+                        <h3>SPDR Gold Trust</h3>
+                        <div class="amount">${totalGold.toFixed(2)}</div>
+                        <div class="count">${charges.filter(c => c.units === 'SPDR Gold').length} actions</div>
+                    </div>
                 </div>
             `;
 
-            Object.values(summary).forEach(item => {
-                summaryHTML += `
-                    <div class="summary-item">
-                        <h3>${item.category}</h3>
-                        <div class="amount">${item.units === 'USD' ? '$' + item.total.toFixed(2) : item.total.toFixed(2) + ' ' + item.units}</div>
-                        <div class="count">${item.count} entries</div>
-                    </div>
-                `;
-            });
+            const breakdownItems = Object.values(summary);
+            if (breakdownItems.length > 0) {
+                summaryHTML += `<div class="breakdown-label">Breakdown by Category</div><div class="breakdown-grid">`;
+                breakdownItems.forEach(item => {
+                    summaryHTML += `
+                        <div class="breakdown-item">
+                            <h3>${item.category}</h3>
+                            <div class="amount">${item.units === 'USD' ? '$' + item.total.toFixed(2) : item.total.toFixed(2) + ' ' + item.units}</div>
+                            <div class="count">${item.count} ${item.count === 1 ? 'entry' : 'entries'}</div>
+                        </div>
+                    `;
+                });
+                summaryHTML += `</div>`;
+            }
 
             document.getElementById('summaryGrid').innerHTML = summaryHTML;
 
@@ -766,6 +1097,101 @@
             }
         }
 
+        function updateMatthiasView() {
+            const users = Object.keys(allUsersData);
+            let grandTotalUSD = 0;
+            let grandTotalGold = 0;
+            let totalChargeCount = 0;
+            const byReason = {};
+            const byPerson = {};
+
+            users.forEach(user => {
+                const userCharges = toArray(allUsersData[user]);
+                let personUSD = 0;
+                let personGold = 0;
+
+                userCharges.forEach(charge => {
+                    totalChargeCount++;
+                    const cat = charge.category || 'Other';
+                    const units = charge.units || 'USD';
+
+                    // Aggregate by reason
+                    if (!byReason[cat]) {
+                        byReason[cat] = { totalUSD: 0, totalGold: 0, count: 0 };
+                    }
+                    byReason[cat].count++;
+
+                    if (units === 'USD') {
+                        grandTotalUSD += charge.amount;
+                        personUSD += charge.amount;
+                        byReason[cat].totalUSD += charge.amount;
+                    } else if (units === 'SPDR Gold') {
+                        grandTotalGold += charge.amount;
+                        personGold += charge.amount;
+                        byReason[cat].totalGold += charge.amount;
+                    }
+                });
+
+                byPerson[user] = { totalUSD: personUSD, totalGold: personGold, count: userCharges.length };
+            });
+
+            // Hero total
+            document.getElementById('matthiasTotal').textContent = '$' + grandTotalUSD.toFixed(2);
+            document.getElementById('matthiasGoldTotal').textContent =
+                grandTotalGold > 0 ? `+ ${grandTotalGold.toFixed(2)} SPDR Gold Trust units` : '';
+
+            // Currency cards
+            document.getElementById('matthiasCurrencyGrid').innerHTML = `
+                <div class="matthias-currency-card">
+                    <h3>US Dollars</h3>
+                    <div class="amount">$${grandTotalUSD.toFixed(2)}</div>
+                    <div class="count">${totalChargeCount - Object.values(byReason).reduce((s, r) => s + (r.totalGold > 0 && r.totalUSD === 0 ? r.count : 0), 0)} USD charges</div>
+                </div>
+                <div class="matthias-currency-card" style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
+                    <h3>SPDR Gold Trust</h3>
+                    <div class="amount">${grandTotalGold.toFixed(2)} units</div>
+                    <div class="count">${Object.values(byReason).reduce((s, r) => s + (r.totalGold > 0 ? r.count : 0), 0)} gold charges</div>
+                </div>
+            `;
+
+            // Reason breakdown
+            const reasonOrder = ['Missed Message', 'Late to Meeting', 'Extended Meeting', 'Failed Notebook Action'];
+            const allReasons = [...new Set([...reasonOrder, ...Object.keys(byReason)])];
+            let reasonHTML = '';
+            allReasons.forEach(reason => {
+                const data = byReason[reason] || { totalUSD: 0, totalGold: 0, count: 0 };
+                let amountStr = '';
+                amountStr += '$' + data.totalUSD.toFixed(2);
+                if (data.totalGold > 0) amountStr += ' + ' + data.totalGold.toFixed(2) + ' Gold';
+                reasonHTML += `
+                    <div class="matthias-reason-card">
+                        <h4>${reason}</h4>
+                        <div class="amount">${amountStr || '$0.00'}</div>
+                        <div class="count">${data.count} ${data.count === 1 ? 'time' : 'times'}</div>
+                    </div>
+                `;
+            });
+            document.getElementById('matthiasReasonGrid').innerHTML = reasonHTML || '<p style="color:#999;">No charges yet — keep it up!</p>';
+
+            // Per-person breakdown
+            let peopleHTML = '';
+            Object.keys(byPerson).sort((a, b) => (byPerson[b].totalUSD + byPerson[b].totalGold * 100) - (byPerson[a].totalUSD + byPerson[a].totalGold * 100)).forEach(person => {
+                const d = byPerson[person];
+                if (d.count === 0) return;
+                let lines = '';
+                if (d.totalUSD > 0) lines += `<div class="detail"><strong>USD:</strong> $${d.totalUSD.toFixed(2)}</div>`;
+                if (d.totalGold > 0) lines += `<div class="detail"><strong>Gold:</strong> ${d.totalGold.toFixed(2)} units</div>`;
+                lines += `<div class="detail"><strong>Charges:</strong> ${d.count}</div>`;
+                peopleHTML += `
+                    <div class="matthias-person-card">
+                        <h4>${person}</h4>
+                        ${lines}
+                    </div>
+                `;
+            });
+            document.getElementById('matthiasPeopleGrid').innerHTML = peopleHTML || '<p style="color:#999;">No one has charged you yet!</p>';
+        }
+
         function updateTeamDashboard() {
             const users = Object.keys(allUsersData);
 
@@ -781,7 +1207,7 @@
             const userTotals = {};
 
             users.forEach(user => {
-                const userCharges = allUsersData[user] || [];
+                const userCharges = toArray(allUsersData[user]);
                 userTotals[user] = {
                     totalUSD: 0,
                     totalGold: 0,
