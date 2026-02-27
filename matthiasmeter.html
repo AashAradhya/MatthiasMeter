@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatthiasMeter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .auth-card {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1, h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            margin-top: 10px;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            width: auto;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-small {
+            width: auto;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .summary-item h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .summary-item .amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .summary-item .count {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .rate-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .rate-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .rate-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rate-card li {
+            padding: 8px 0;
+            color: #555;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .rate-card li:last-child {
+            border-bottom: none;
+        }
+
+        .charge-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .charge-info h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .charge-info p {
+            color: #666;
+            font-size: 14px;
+            margin: 3px 0;
+        }
+
+        .charge-amount {
+            text-align: right;
+        }
+
+        .charge-amount .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .charge-amount .date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            background: #efe;
+            color: #3c3;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .switch-auth {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .switch-auth button {
+            background: none;
+            color: #667eea;
+            text-decoration: underline;
+            width: auto;
+            padding: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .no-charges {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+        }
+
+        .calc-hint {
+            color: #667eea;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth View -->
+    <div id="authView" class="auth-container">
+        <div class="auth-card card">
+            <h2>MatthiasMeter</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                Track what Matthias owes you
+            </p>
+            
+            <div id="selectUserForm">
+                <div class="form-group">
+                    <label>Who are you?</label>
+                    <select id="userSelect" onchange="updateLoginButton()">
+                        <option value="">-- Select your name --</option>
+                    </select>
+                </div>
+                <button onclick="selectUser()" id="selectUserBtn" disabled>Continue</button>
+                
+                <div style="text-align: center; margin: 20px 0; color: #999;">OR</div>
+                
+                <div class="form-group">
+                    <label>Add yourself as a debt collector</label>
+                    <input type="text" id="newUserName" placeholder="Enter your name">
+                </div>
+                <button onclick="addNewUser()">Add Me</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboardView" class="hidden">
+        <div class="container">
+            <div class="header">
+                <h1>MatthiasMeter</h1>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <button onclick="showPersonalView()" class="btn-small" id="personalBtn">My Charges</button>
+                    <button onclick="showTeamView()" class="btn-small" id="teamBtn">Team Dashboard</button>
+                    <span>Welcome, <strong id="currentUser"></strong></span>
+                    <button onclick="logout()" class="btn-small">Logout</button>
+                </div>
+            </div>
+
+            <!-- Team Dashboard View -->
+            <div id="teamView" class="hidden">
+                <div class="card">
+                    <h2>Team Dashboard - What Matthias Owes Everyone</h2>
+                    <div id="teamSummary">
+                        <!-- Team summary will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Breakdown by Team Member</h2>
+                    <div id="teamBreakdown">
+                        <!-- Team breakdown will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal View -->
+            <div id="personalView">
+
+            <!-- Rate Card -->
+            <div class="card">
+                <h2>Rate Card</h2>
+                <div class="rate-card">
+                    <h3>Matthias's Accountability Rates:</h3>
+                    <ul>
+                        <li><strong>Missed Messages:</strong> $10 for every 2 hours of delay</li>
+                        <li><strong>Late to Meetings:</strong> $2 per minute joined late</li>
+                        <li><strong>Failed Notebook Actions:</strong> 1 unit of SPDR Gold Trust per action</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="card">
+                <h2>What Matthias Owes You</h2>
+                <div class="summary-grid" id="summaryGrid">
+                    <!-- Summary items will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Quick Add Counters -->
+            <div class="card">
+                <h2>Quick Add - Press to Count</h2>
+                <div id="addChargeSuccess" class="success hidden"></div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                        <h3 style="color: #667eea; font-size: 18px; margin-bottom: 10px;">Missed Message</h3>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">$10 per 2 hours</p>
+                        <input type="number" step="0.5" min="0" id="quickDelay" placeholder="Hours delay" style="margin-bottom: 10px; text-align: center;">
+                        <button onclick="quickAddCharge('Missed Message')" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold;">+ Add</button>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                        <h3 style="color: #667eea; font-size: 18px; margin-bottom: 10px;">Late to Meeting</h3>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">$2 per minute</p>
+                        <input type="number" min="0" id="quickMinutes" placeholder="Minutes late" style="margin-bottom: 10px; text-align: center;">
+                        <button onclick="quickAddCharge('Late to Meeting')" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold;">+ Add</button>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                        <h3 style="color: #667eea; font-size: 18px; margin-bottom: 10px;">Failed Action</h3>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">1 SPDR Gold</p>
+                        <div style="height: 42px; margin-bottom: 10px;"></div>
+                        <button onclick="quickAddCharge('Failed Notebook Action')" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold;">+ Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Charges -->
+            <div class="card">
+                <h2>All Charges (<span id="chargeCount">0</span>)</h2>
+                <div id="chargesList">
+                    <!-- Charges will be inserted here -->
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize app
+        let currentUser = null;
+        let charges = [];
+
+        // Load data on startup
+        window.onload = function() {
+            loadUserList();
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = savedUser;
+                loadCharges();
+                showDashboard();
+            }
+        };
+
+        function loadUserList() {
+            const users = JSON.parse(localStorage.getItem('debtCollectors') || '[]');
+            const select = document.getElementById('userSelect');
+            
+            // Clear existing options except first
+            select.innerHTML = '<option value="">-- Select your name --</option>';
+            
+            users.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user;
+                option.textContent = user;
+                select.appendChild(option);
+            });
+        }
+
+        function updateLoginButton() {
+            const select = document.getElementById('userSelect');
+            document.getElementById('selectUserBtn').disabled = !select.value;
+        }
+
+        function selectUser() {
+            const select = document.getElementById('userSelect');
+            const username = select.value;
+            
+            if (!username) {
+                alert('Please select your name');
+                return;
+            }
+
+            currentUser = username;
+            localStorage.setItem('currentUser', username);
+            loadCharges();
+            showDashboard();
+        }
+
+        function addNewUser() {
+            const newName = document.getElementById('newUserName').value.trim();
+            
+            if (!newName) {
+                alert('Please enter your name');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('debtCollectors') || '[]');
+            
+            if (users.includes(newName)) {
+                alert('This name already exists. Please select it from the dropdown.');
+                return;
+            }
+
+            // Add new user
+            users.push(newName);
+            localStorage.setItem('debtCollectors', JSON.stringify(users));
+            
+            // Auto login as new user
+            currentUser = newName;
+            localStorage.setItem('currentUser', newName);
+            
+            // Initialize empty charges for new user
+            const allCharges = JSON.parse(localStorage.getItem('charges') || '{}');
+            allCharges[newName] = [];
+            localStorage.setItem('charges', JSON.stringify(allCharges));
+            
+            charges = [];
+            showDashboard();
+        }
+
+        // View management
+        function showPersonalView() {
+            document.getElementById('personalView').classList.remove('hidden');
+            document.getElementById('teamView').classList.add('hidden');
+            document.getElementById('personalBtn').style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            document.getElementById('teamBtn').style.background = '#6c757d';
+        }
+
+        function showTeamView() {
+            document.getElementById('personalView').classList.add('hidden');
+            document.getElementById('teamView').classList.remove('hidden');
+            document.getElementById('personalBtn').style.background = '#6c757d';
+            document.getElementById('teamBtn').style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            updateTeamDashboard();
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('authView').classList.remove('hidden');
+            document.getElementById('dashboardView').classList.add('hidden');
+            loadUserList();
+        }
+
+        function showDashboard() {
+            document.getElementById('authView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+            document.getElementById('currentUser').textContent = currentUser;
+            updateDashboard();
+        }
+
+        function showError(elementId, message) {
+            const errorEl = document.getElementById(elementId);
+            errorEl.textContent = message;
+            errorEl.classList.remove('hidden');
+            setTimeout(() => errorEl.classList.add('hidden'), 3000);
+        }
+
+        // Charge management
+        function loadCharges() {
+            const allCharges = JSON.parse(localStorage.getItem('charges') || '{}');
+            charges = allCharges[currentUser] || [];
+        }
+
+        function saveCharges() {
+            const allCharges = JSON.parse(localStorage.getItem('charges') || '{}');
+            allCharges[currentUser] = charges;
+            localStorage.setItem('charges', JSON.stringify(allCharges));
+        }
+
+        function quickAddCharge(category) {
+            let amount = 0;
+            let units = 'USD';
+            let delayHours = null;
+            let minutesLate = null;
+            let defaultDesc = '';
+
+            if (category === 'Missed Message') {
+                delayHours = parseFloat(document.getElementById('quickDelay').value) || 2;
+                amount = (delayHours / 2) * 10;
+                defaultDesc = `Message delayed by ${delayHours} hours`;
+            } else if (category === 'Late to Meeting') {
+                minutesLate = parseInt(document.getElementById('quickMinutes').value) || 5;
+                amount = minutesLate * 2;
+                defaultDesc = `Joined meeting ${minutesLate} minutes late`;
+            } else if (category === 'Failed Notebook Action') {
+                amount = 1;
+                units = 'SPDR Gold';
+                defaultDesc = 'Notebook action not completed';
+            }
+
+            if (amount <= 0) {
+                alert('Please enter valid delay/late time');
+                return;
+            }
+
+            const charge = {
+                id: Date.now(),
+                category,
+                description: defaultDesc,
+                amount,
+                units,
+                delayHours,
+                minutesLate,
+                createdAt: new Date().toISOString()
+            };
+
+            charges.unshift(charge);
+            saveCharges();
+            updateDashboard();
+
+            // Clear inputs
+            if (category === 'Missed Message') {
+                document.getElementById('quickDelay').value = '';
+            } else if (category === 'Late to Meeting') {
+                document.getElementById('quickMinutes').value = '';
+            }
+
+            // Show success message
+            const successEl = document.getElementById('addChargeSuccess');
+            successEl.textContent = `Added ${category}! ${units === 'USD' ? '$' + amount.toFixed(2) : amount + ' ' + units}`;
+            successEl.classList.remove('hidden');
+            setTimeout(() => successEl.classList.add('hidden'), 2000);
+        }
+
+        function deleteCharge(chargeId) {
+            if (!confirm('Are you sure you want to delete this charge?')) {
+                return;
+            }
+
+            charges = charges.filter(c => c.id !== chargeId);
+            saveCharges();
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Update summary
+            const summary = {};
+            let totalUSD = 0;
+            let totalGold = 0;
+
+            charges.forEach(charge => {
+                const key = `${charge.category}|${charge.units}`;
+                if (!summary[key]) {
+                    summary[key] = { category: charge.category, units: charge.units, total: 0, count: 0 };
+                }
+                summary[key].total += charge.amount;
+                summary[key].count++;
+
+                if (charge.units === 'USD') {
+                    totalUSD += charge.amount;
+                } else if (charge.units === 'SPDR Gold') {
+                    totalGold += charge.amount;
+                }
+            });
+
+            // Render summary
+            let summaryHTML = `
+                <div class="summary-item">
+                    <h3>Total in USD</h3>
+                    <div class="amount">$${totalUSD.toFixed(2)}</div>
+                    <div class="count">${charges.filter(c => c.units === 'USD').length} charges</div>
+                </div>
+                <div class="summary-item">
+                    <h3>SPDR Gold Trust</h3>
+                    <div class="amount">${totalGold.toFixed(2)}</div>
+                    <div class="count">${charges.filter(c => c.units === 'SPDR Gold').length} actions</div>
+                </div>
+            `;
+
+            Object.values(summary).forEach(item => {
+                summaryHTML += `
+                    <div class="summary-item">
+                        <h3>${item.category}</h3>
+                        <div class="amount">${item.units === 'USD' ? '$' + item.total.toFixed(2) : item.total.toFixed(2) + ' ' + item.units}</div>
+                        <div class="count">${item.count} entries</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('summaryGrid').innerHTML = summaryHTML;
+
+            // Update charges list
+            document.getElementById('chargeCount').textContent = charges.length;
+
+            if (charges.length === 0) {
+                document.getElementById('chargesList').innerHTML = '<div class="no-charges">No charges yet. Start by adding your first charge above!</div>';
+            } else {
+                let chargesHTML = '';
+                charges.forEach(charge => {
+                    const date = new Date(charge.createdAt);
+                    const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                    
+                    chargesHTML += `
+                        <div class="charge-item">
+                            <div class="charge-info">
+                                <h4>${charge.category}</h4>
+                                <p>${charge.description}</p>
+                                ${charge.delayHours ? `<p style="font-size: 12px; color: #999;">Delay: ${charge.delayHours} hours</p>` : ''}
+                                ${charge.minutesLate ? `<p style="font-size: 12px; color: #999;">Minutes late: ${charge.minutesLate}</p>` : ''}
+                            </div>
+                            <div class="charge-amount">
+                                <div class="value">${charge.units === 'USD' ? '$' + charge.amount.toFixed(2) : charge.amount + ' ' + charge.units}</div>
+                                <div class="date">${dateStr}</div>
+                                <button onclick="deleteCharge(${charge.id})" class="btn-danger" style="margin-top: 8px;">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('chargesList').innerHTML = chargesHTML;
+            }
+        }
+
+        // Initialize form
+        updateChargeForm();
+    </script>
+</body>
+</html>function updateTeamDashboard() {
+            const allCharges = JSON.parse(localStorage.getItem('charges') || '{}');
+            const users = Object.keys(allCharges);
+
+            if (users.length === 0) {
+                document.getElementById('teamSummary').innerHTML = '<div class="no-charges">No team members have added charges yet.</div>';
+                document.getElementById('teamBreakdown').innerHTML = '';
+                return;
+            }
+
+            // Calculate team totals
+            let teamTotalUSD = 0;
+            let teamTotalGold = 0;
+            const userTotals = {};
+
+            users.forEach(user => {
+                const userCharges = allCharges[user] || [];
+                userTotals[user] = {
+                    totalUSD: 0,
+                    totalGold: 0,
+                    byCategory: {},
+                    chargeCount: userCharges.length
+                };
+
+                userCharges.forEach(charge => {
+                    if (charge.units === 'USD') {
+                        userTotals[user].totalUSD += charge.amount;
+                        teamTotalUSD += charge.amount;
+                    } else if (charge.units === 'SPDR Gold') {
+                        userTotals[user].totalGold += charge.amount;
+                        teamTotalGold += charge.amount;
+                    }
+
+                    if (!userTotals[user].byCategory[charge.category]) {
+                        userTotals[user].byCategory[charge.category] = { count: 0, amount: 0, units: charge.units };
+                    }
+                    userTotals[user].byCategory[charge.category].count++;
+                    userTotals[user].byCategory[charge.category].amount += charge.amount;
+                });
+            });
+
+            // Render team summary
+            let summaryHTML = `
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h3>Total Team USD</h3>
+                        <div class="amount">$${teamTotalUSD.toFixed(2)}</div>
+                        <div class="count">${users.length} team members</div>
+                    </div>
+                    <div class="summary-item">
+                        <h3>Total SPDR Gold</h3>
+                        <div class="amount">${teamTotalGold.toFixed(2)}</div>
+                        <div class="count">across all members</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('teamSummary').innerHTML = summaryHTML;
+
+            // Render breakdown by user
+            let breakdownHTML = '';
+            Object.keys(userTotals).sort((a, b) => {
+                const aTotal = userTotals[a].totalUSD + (userTotals[a].totalGold * 100); // Rough gold valuation for sorting
+                const bTotal = userTotals[b].totalUSD + (userTotals[b].totalGold * 100);
+                return bTotal - aTotal;
+            }).forEach(user => {
+                const data = userTotals[user];
+                breakdownHTML += `
+                    <div class="charge-item" style="margin-bottom: 20px;">
+                        <div class="charge-info" style="flex: 1;">
+                            <h4 style="font-size: 20px; margin-bottom: 10px;">${user}</h4>
+                            <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+                                <p style="font-size: 16px;"><strong>USD:</strong> $${data.totalUSD.toFixed(2)}</p>
+                                <p style="font-size: 16px;"><strong>Gold:</strong> ${data.totalGold.toFixed(2)}</p>
+                                <p style="font-size: 16px;"><strong>Charges:</strong> ${data.chargeCount}</p>
+                            </div>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+                                ${Object.keys(data.byCategory).map(cat => {
+                                    const catData = data.byCategory[cat];
+                                    return `<span style="background: #e8eaf6; padding: 5px 10px; border-radius: 5px; font-size: 12px;">
+                                        <strong>${cat}:</strong> ${catData.units === 'USD' ? '$' + catData.amount.toFixed(2) : catData.amount + ' ' + catData.units} (${catData.count}x)
+                                    </span>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('teamBreakdown').innerHTML = breakdownHTML;
+        }
+    </script>
+</body>
+</html>
